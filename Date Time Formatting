@@ -1,0 +1,27 @@
+#Looking at Date last updated, a categorical variable. As we can see the datetime is not sorted correctly due to different formattings.
+adjusted_unique_dates = list(data['Last Update'].unique())
+adjusted_unique_dates.sort()
+adjusted_unique_dates
+
+#Fixing the date time issue
+fix_date = []
+for i in adjusted_unique_dates[-175:]:
+    d = datetime.datetime.strptime(i, '%Y-%d-%m %H:%M:%S')
+    convert = datetime.datetime.strftime(d, "%Y-%m-%d %H:%M:%S")
+    fix_date.append(convert)
+    data.replace(i, convert, inplace=True)
+adjusted_unique_dates[-175:] = fix_date
+
+#We also see an issue with 2020/1/2 which is actually 2020/2/1
+adjusted_unique_dates.sort()
+adjusted_unique_dates
+
+for i in adjusted_unique_dates[20:33]:
+    d2 = datetime.datetime.strptime(i, '%Y-%d-%m %H:%M:%S')
+    convert2 = datetime.datetime.strftime(d2, "%Y-%m-%d %H:%M:%S")
+    fix_date_2.append(convert2)
+    data.replace(i, convert2, inplace=True)
+    
+adjusted_unique_dates[20:35] = fix_date_2
+
+Now everything is sorted properly
